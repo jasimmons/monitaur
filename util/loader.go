@@ -23,12 +23,12 @@ func LoadConfig(configDir string) ([]monitaur.Check, []monitaur.Handler, error) 
 			return err
 		}
 		if info.IsDir() {
-			log.Infof("ignoring directory: %s\n", path)
+			log.Debugf("ignoring directory: %s\n", path)
 			return nil
 		} else {
 
 			if filepath.Ext(path) != ".json" {
-				log.Infof("file at %s has extension '%s', not '.json'\n", path, filepath.Ext(path))
+				log.Debugf("file at %s has extension '%s', not '.json'\n", path, filepath.Ext(path))
 				return nil
 			}
 			var fContent []byte
@@ -37,7 +37,7 @@ func LoadConfig(configDir string) ([]monitaur.Check, []monitaur.Handler, error) 
 			}
 
 			if len(fContent) == 0 {
-				log.Infof("read empty JSON file -- ignoring (at: %s)\n", path)
+				log.Debugf("read empty JSON file -- ignoring (at: %s)\n", path)
 				return nil
 			}
 
