@@ -7,19 +7,30 @@ import (
 	"github.com/jasimmons/monitaur/util"
 )
 
-var configDir string
+var (
+	configDir  string
+	logVerbose bool
+)
 
 func init() {
 	const (
-		defaultConfigDir = "/etc/monitaur/conf.d"
-		usage            = "the directory where configuration is located"
+		defaultConfigDir  = "/etc/monitaur/conf.d"
+		configDirUsage    = "the directory where configuration is located"
+		defaultLogVerbose = false
+		logVerboseUsage   = "enable verbose logging (for debugging)"
 	)
-	flag.StringVar(&configDir, "c", defaultConfigDir, usage)
+	flag.StringVar(&configDir, "c", defaultConfigDir, configDirUsage)
+	flag.BoolVar(&logVerbose, "v", defaultLogVerbose, logVerboseUsage)
 }
 
 func main() {
 	log.Info("monitaur!")
 	flag.Parse()
+
+	if logVerbose {
+		log.Verbose = true
+		log.Debug("debug logging enabled")
+	}
 
 	cfg := &monitaur.Config{
 		ConfigDir: configDir,

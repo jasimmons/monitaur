@@ -6,6 +6,8 @@ import (
 	"runtime/debug"
 )
 
+var Verbose bool
+
 var (
 	debugLogger = log.New(os.Stdout, "[DEBUG] ", log.LstdFlags|log.LUTC)
 	infoLogger  = log.New(os.Stdout, "[INFO] ", log.LstdFlags|log.LUTC)
@@ -15,10 +17,14 @@ var (
 
 var (
 	Debugf = func(format string, v ...interface{}) {
-		debugLogger.Printf(format, v...)
+		if Verbose {
+			debugLogger.Printf(format, v...)
+		}
 	}
 	Debug = func(v ...interface{}) {
-		debugLogger.Println(v...)
+		if Verbose {
+			debugLogger.Println(v...)
+		}
 	}
 	Infof = func(format string, v ...interface{}) {
 		infoLogger.Printf(format, v...)
