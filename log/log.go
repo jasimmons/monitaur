@@ -39,7 +39,10 @@ var (
 		errorLogger.Println(v...)
 	}
 	Fatalf = func(format string, v ...interface{}) {
+		stack := debug.Stack()
 		fatalLogger.Printf(format, v...)
+		fatalLogger.Println(stack)
+		os.Exit(1)
 	}
 	Fatal = func(v ...interface{}) {
 		stack := debug.Stack()
